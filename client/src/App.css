@@ -1,0 +1,20 @@
+.App {
+  text-align: center;
+}
+.center{
+  justify-content: center;
+}
+.cup {
+  height: 10rem;
+  width: 10rem;
+  background-color: green;
+  border-radius: 50%;
+}
+
+.cup-removed {
+  height: 10rem;
+  width: 10rem;
+  background-color: red;
+  border-radius: 50%;
+}
+
