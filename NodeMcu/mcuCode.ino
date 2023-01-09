@@ -13,7 +13,6 @@ const char *serverName = "http://<your local ip>:5001";
 
 WiFiClient client;
 HTTPClient httpClient;
-int currentTemp = 0;
 void setup()
 {
     Serial.begin(9600);
@@ -151,3 +150,4 @@ void loop()
             Serial.println("WIFI DISCONNECTED");
          }
     }
+}
