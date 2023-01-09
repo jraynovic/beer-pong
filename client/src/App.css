@@ -4,17 +4,55 @@
 .center{
   justify-content: center;
 }
-.cup {
+
+.cup-container{
+  position: relative;
   height: 10rem;
-  width: 10rem;
-  background-color: green;
-  border-radius: 50%;
+  width:7rem;
+  
 }
 
-.cup-removed {
+.cup-left{
   height: 10rem;
-  width: 10rem;
+  width: 5rem;
+  border-top: .4rem solid darkgreen;
+  background-color: green;
+  transform: skew(7deg);
+  border-bottom-left-radius:1rem;
+  position:absolute;
+  float: left;
+}
+
+.cup-right{
+  height: 10rem;
+  width: 5rem;
+  border-top: .4rem solid darkgreen;
+  background-color: green;
+  transform: skew(-7deg);
+  border-bottom-right-radius:1rem;
+  
+  float: right;
+}
+
+.cup-left-removed{
+  height: 10rem;
+  width: 5rem;
+  border-top: .4rem solid darkred;
   background-color: red;
-  border-radius: 50%;
+  transform: skew(7deg);
+  border-bottom-left-radius:1rem;
+  position:absolute;
+  float: left;
+}
+
+.cup-right-removed{
+  height: 10rem;
+  width: 5rem;
+  border-top: .4rem solid darkred;
+  background-color: red;
+  transform: skew(-7deg);
+  border-bottom-right-radius:1rem;
+  
+  float: right;
 }
 
