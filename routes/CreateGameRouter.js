@@ -6,6 +6,8 @@ const { makeGameId, makePlayerCode } = require('../helpers/helper');
 GameRouter.route('/new')
 .post(async (req,res)=>{
   const { playerOne, deviceOne } = req.body;
+  console.log(playerOne)
+  console.log*deviceOne
   const io = req.app.get('io');
   const gameId = makeGameId();
   const game = await Game.create({gameId, playerOne, deviceOne})

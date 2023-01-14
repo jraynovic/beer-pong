@@ -12,15 +12,18 @@ PointRouter.route('/')
   const io = req.app.get('io')
   const game = await Game.findOne({where:{[Op.or]:{deviceOne:device, deviceTwo:device } } } )
   if(device === game.dataValues.deviceOne){
-    if(game.dataValues.playerOnePoints <6){
+    if(game.dataValues.playerOnePoints <100){
       const playerOnePoints = +game.dataValues.playerOnePoints +1
-      io.sockets.emit('point', parseInt(point))
-      io.to(game.gameId).emit({player:'one',point});
+      io.sockets.emit('point', {point:parseInt(point),device, gameId:game.dataValues.gameId})
       await Game.update({playerOnePoints},{where:{gameId:game.dataValues.gameId}})
     }
     console.log('PLAYER ONE SCORED!')
   }else if( device === game.dataValues.deviceTwo){
-    io.to(game.gameId).emit({player:'two',point});
+    if(game.dataValues.playerOnePoints <100){
+      const playerTwoPoints = +game.dataValues.playerOnePoints +1
+      io.sockets.emit('point', {point:parseInt(point),device, gameId:game.dataValues.gameId})
+      await Game.update({playerTwoPoints},{where:{gameId:game.dataValues.gameId}})
+    }
     console.log('PLAYER TWO SCORED!')
   }
   res.status(201)  

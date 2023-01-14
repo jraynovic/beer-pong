@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Grid, Button, TextField } from "@mui/material";
 
-const HomeComponent = ({setUserName,userName,game, device, setDevice, setPlayer, joinType, setJoinType}) => {
+const HomeComponent = ({setUserName,userName,game, device, setDevice, setPlayer, joinType, setJoinType,setGameStarted,gameId, setGameId}) => {
 
     if(!joinType){
         return(
@@ -37,7 +37,7 @@ const HomeComponent = ({setUserName,userName,game, device, setDevice, setPlayer,
              />
            </div>
            <div>
-             <Button variant="contained" onClick={() => game('create')}>
+             <Button variant="contained" onClick={() => setGameStarted(true)}>
                Create
              </Button>
            </div>
@@ -69,14 +69,14 @@ const HomeComponent = ({setUserName,userName,game, device, setDevice, setPlayer,
          </div>
          <div>
            <TextField
-             value={device}
+             value={gameId}
              label="Game Code"
              variant="outlined"
-            //  onChange={(e) => setGameId(e.target.value)}
+             onChange={(e) => setGameId(e.target.value)}
            />
          </div>
          <div>
-           <Button variant="contained" onClick={() => game(true)}>
+           <Button variant="contained" onClick={() => setGameStarted(true)}>
              Join
            </Button>
          </div>

@@ -21,14 +21,15 @@ const RedCup = () => {
   );
 };
 
-const GameBoard = ({ gameId }) => {
+const GameBoard = ({ gameId, device, userName }) => {
   const [board, setBoard] = useState([]);
 
-  useEffect(() => {
-    subscribeToPoints((err, point) => {
-      setBoard([...board, point]);
-    });
-  }, []);
+  subscribeToPoints((err, point) => {
+    if(device != point.device && gameId === point.gameId){
+      setBoard([...board, point.point]);
+    }
+    
+  });
 
   return (
     <div>
@@ -36,7 +37,7 @@ const GameBoard = ({ gameId }) => {
         <Grid className="center" container>
           <Grid item>
             <h1>
-              Beer Pong {gameId}
+              Beer Pong {`gameId: ${gameId} device: ${device} user name: ${userName}`}
             </h1>
           </Grid>
         </Grid>
