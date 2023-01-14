@@ -5,4 +5,5 @@ function subscribeToPoints(cb) {
   socket.on('point', point => cb(null, point));
   socket.emit('listenForPoint');
 }
+
 export { subscribeToPoints };
