@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import GameBoard from "./GameBoard";
-import HomeComponent from "./HomeComponent";
+import CreateGameComponent from "./CreateGameComponent";
 import { subscribeToPoints } from "../api";
 
 const MainComponent = () => {
@@ -32,7 +32,7 @@ const MainComponent = () => {
         return <GameBoard gameId={gameId} device={device} userName={userName}/>
     }
     return (
-        <HomeComponent
+        <CreateGameComponent
             setGameStarted={setGameStarted} 
             userName={userName} 
             setUserName={setUserName} 

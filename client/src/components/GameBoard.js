@@ -29,7 +29,7 @@ const GameBoard = ({ gameId, device, userName }) => {
       setBoard([...board, point.point]);
     }
     
-  });
+  },device);
 
   return (
     <div>

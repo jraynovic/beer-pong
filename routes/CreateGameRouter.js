@@ -11,7 +11,6 @@ GameRouter.route('/new')
   const io = req.app.get('io');
   const gameId = makeGameId();
   const game = await Game.create({gameId, playerOne, deviceOne})
-  // req.app.get('io').join(gameId)
   io.on("connection", socket => {
     socket.join(gameId);
   });
@@ -22,8 +21,7 @@ GameRouter.route('/new')
 GameRouter.route('/join')
 .post(async (req,res)=>{
   const { playerTwo, gameId, deviceTwo } = req.body;
-  const updatedGame = await Game.update({playerTwo, deviceTwo},{where:{gameId}})
-  // req.app.get('io').join(gameId)
+  const updatedGame = await Game.update({playerTwo, deviceTwo},{where:{gameId,gameFinished:false}})
   res.status(201)  
   res.send({...updatedGame })
 })

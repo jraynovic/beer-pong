@@ -1,9 +1,9 @@
 import openSocket from 'socket.io-client';
-const  socket = openSocket('http://localhost:8000');
+const  socket = openSocket('http://localhost:5001');
 
-function subscribeToPoints(cb) {
+function subscribeToPoints(cb,deviceId) {
   socket.on('point', point => cb(null, point));
-  socket.emit('listenForPoint');
+  socket.emit('listenForPoint',deviceId);
 }
 
 export { subscribeToPoints };
