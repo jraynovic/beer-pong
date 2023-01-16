@@ -12,7 +12,7 @@ PointRouter.route('/')
   const io = req.app.get('io')
   const game = await Game.findOne({where:{[Op.or]:{deviceOne:device, deviceTwo:device }, gameFinished:false } } )
   if(device === game.dataValues.deviceOne){  
-    if(game.dataValues.playerOnePoints <100){
+    if(game.dataValues.playerOnePoints <100){ 
       const playerOnePoints = +game.dataValues.playerOnePoints +1
       io.sockets.emit('point', {point:parseInt(point),device, gameId:game.dataValues.gameId})
       await Game.update({playerOnePoints},{where:{gameId:game.dataValues.gameId}})

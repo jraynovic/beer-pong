@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Grid, Button, TextField } from "@mui/material";
+import { JoinComponent } from "./JoinComponent";
+import NewGame from "./NewGameComponent";
+import JoinGameComponent from "./JoinGameComponent";
 
 const CreateGameComponent = ({
   setUserName,
@@ -16,99 +19,18 @@ const CreateGameComponent = ({
 }) => {
   if (!joinType) {
     return (
-      <div>
-        <Grid container>
-          <Grid item xs={12}>
-            <Button
-              style={{ margin: 20, marginTop: 100 }}
-              variant="contained"
-              onClick={() => setJoinType("join")}
-            >
-              Join Game with Code
-            </Button>{" "}
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              style={{ margin: 20 }}
-              variant="contained"
-              onClick={() => setJoinType("new")}
-            >
-              Create Game
-            </Button>{" "}
-          </Grid>
-        </Grid>
-      </div>
+      <JoinComponent setJoinType={setJoinType}/>
     );
   }
 
   if (joinType === "new") {
     return (
-      <div style={{ marginTop: 50 }}>
-        <div>Create New Game</div>
-        <div>{userName}</div>
-        <div>
-          <div>
-            <TextField
-              value={userName}
-              label="Name"
-              variant="outlined"
-              onChange={(e) => setUserName(e.target.value)}
-            />
-          </div>
-          <div>
-            <TextField
-              value={device}
-              label="Device Id"
-              variant="outlined"
-              onChange={(e) => setDevice(e.target.value)}
-            />
-          </div>
-          <div>
-            <Button variant="contained" onClick={() => setGameStarted(true)}>
-              Create
-            </Button>
-          </div>
-        </div>
-      </div>
+      <NewGame device={device} setDevice={setDevice} userName={userName} setUserName={setUserName} setGameStarted={setGameStarted} />
     );
   }
 
   return (
-    <div style={{ marginTop: 50 }}>
-      <div>Join Game</div>
-      <div>{userName}</div>
-      <div>
-        <div>
-          <TextField
-            value={userName}
-            label="Name"
-            variant="outlined"
-            onChange={(e) => setUserName(e.target.value)}
-          />
-        </div>
-        <div>
-          <TextField
-            value={device}
-            label="Device Id"
-            variant="outlined"
-            onChange={(e) => setDevice(e.target.value)}
-          />
-        </div>
-        <div>
-          <TextField
-            value={gameId}
-            label="Game Code"
-            variant="outlined"
-            onChange={(e) => setGameId(e.target.value)}
-          />
-        </div>
-        <div>
-          <Button variant="contained" onClick={() => setGameStarted(true)}>
-            Join
-          </Button>
-        </div>
-      </div>
-    </div>
+    <JoinGameComponent userName={userName} setUserName={setUserName} device={device} setDevice={setDevice} gameId={gameId} setGameId={setGameId} setGameStarted={setGameStarted}/>
   );
 };
 export default CreateGameComponent;
