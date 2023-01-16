@@ -16,6 +16,9 @@ Game.init(
     playerOne:{
       type: DataTypes.STRING
     },
+    playerOneSocketId:{
+      type: DataTypes.STRING
+    },
     deviceOne:{
       type: DataTypes.INTEGER,    
     },
@@ -25,6 +28,9 @@ Game.init(
     playerTwo:{
       type: DataTypes.STRING
     },
+    playerTwoSocketId:{
+      type: DataTypes.STRING
+    },
     deviceTwo:{
       type: DataTypes.INTEGER,    
     },
@@ -32,7 +38,8 @@ Game.init(
       type: DataTypes.STRING
     },
     gameFinished: {
-      type: DataTypes.BOOLEAN
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   },
   {

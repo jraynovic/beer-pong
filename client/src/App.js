@@ -1,15 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
-import GameBoard from './components/GameBoard';
 import { BrowserRouter } from 'react-router-dom';
-import  MainComponent from './components/MainComponent'
-
+import Main from './components/Main'
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <MainComponent/>
-        {/* <GameBoard/> */}
+        <Main/>
       </div>
     </BrowserRouter>
     
