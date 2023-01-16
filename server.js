@@ -31,6 +31,11 @@ io.on('connection', (socket) => {
   socket.on("disconnect", async () => {
 		console.log('User disconnect')
     await Game.update({gameFinished:true},{where:{[Op.or]:{playerOneSocketId:socket.id, playerTwoSocketId:socket.id}}})
+    const game =  await Game.findOne({where:{[Op.or]:{playerOneSocketId:socket.id, playerTwoSocketId:socket.id } } } )
+    console.log(game?.dataValues?.gameId)
+    if(game?.dataValues?.playerOneSocketId || game?.dataValues?.playerTwoSocketId){
+      io.sockets.emit('endgame', {gameId:game?.dataValues?.gameId})
+    }
 	});
 });
 

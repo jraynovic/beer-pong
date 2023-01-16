@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Button } from "@mui/material";
-import { subscribeToPoints, subscribeToRoom, sendRoom } from "../api";
-
+import { subscribeToGame } from "../api";
 
 const GreenCup = () => {
   return (
@@ -23,13 +22,14 @@ const RedCup = () => {
 
 const GameBoard = ({ gameId, device, userName }) => {
   const [board, setBoard] = useState([]);
+  const [gameInPlay, setGameInPlay] = useState(true);
 
-  subscribeToPoints((err, point) => {
-    if(device != point.device && gameId === point.gameId){
+  subscribeToGame((err, point) => {
+    if (Object.keys(point)[0] === "endgame") setGameInPlay(false);
+    if (device !== point.device && gameId === point.gameId) {
       setBoard([...board, point.point]);
     }
-    
-  },device);
+  }, device);
 
   return (
     <div>
@@ -37,8 +37,12 @@ const GameBoard = ({ gameId, device, userName }) => {
         <Grid className="center" container>
           <Grid item>
             <h1>
-              Beer Pong {`gameId: ${gameId} device: ${device} user name: ${userName}`}
+              Beer Pong{" "}
+              {`gameId: ${gameId} device: ${device} user name: ${userName}`}
             </h1>
+          </Grid>
+          <Grid item xs={12}>
+            {gameInPlay ? "Still playing" : "User has left the game"}
           </Grid>
         </Grid>
         <Grid className="center" container>
