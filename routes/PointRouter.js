@@ -9,13 +9,15 @@ const Codes = require('../models/CodesModel');
 PointRouter.route('/')
 .post(async (req,res)=>{
   const { device, point } = req.body
+  console.log(req.body)
+  console.log('^^^BODY')
   const io = req.app.get('io')
-  const game = await Game.findOne({where:{[Op.or]:{deviceOne:device, deviceTwo:device }, gameFinished:false } } )
+  const game = await Game.findOne({where:{[Op.or]:{deviceOne: parseInt(device), deviceTwo:parseInt(device) }, gameFinished:false } } )
   if(device === game.dataValues.deviceOne){  
     if(game.dataValues.playerOnePoints <100){ 
       const playerOnePoints = +game.dataValues.playerOnePoints +1
       io.sockets.emit('point', {point:parseInt(point),device, gameId:game.dataValues.gameId})
-      await Game.update({playerOnePoints},{where:{gameId:game.dataValues.gameId}})
+      await Game.update({playerOnePoints},{where:{gameId:game.dataValues.gameId}}) 
     }
     console.log('PLAYER ONE SCORED!')
   }else if( device === game.dataValues.deviceTwo){
