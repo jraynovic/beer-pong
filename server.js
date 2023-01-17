@@ -17,7 +17,7 @@ const io = require("socket.io")(server, {
 	}
 });
 
-app.use(cors());
+app.use(cors({orgin:'*'}))
 
 io.on('connection', (socket) => {
   socket.on('listenForPoint',async (deviceId)=>{
@@ -43,7 +43,6 @@ io.on('connection', (socket) => {
 
 
 const PORT = 5001;
-app.use(cors({orgin:'*'}))
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 sequelize.sync().then(() => console.log("db is ready"));
