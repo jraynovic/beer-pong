@@ -7,6 +7,7 @@ const CreateGameRouter = require('./routes/CreateGameRouter');
 const PointRouter = require("./routes/PointRouter");
 const Game = require('./models/GameModel')
 const server = require("http").createServer(app);
+app.use(express.static('client/build'))
 const cors = require("cors");
 
 const io = require("socket.io")(server, {
@@ -46,7 +47,6 @@ app.use(cors({orgin:'*'}))
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 sequelize.sync().then(() => console.log("db is ready"));
-
 app.set('io', io)
 
 app.use('/game', CreateGameRouter)
@@ -57,7 +57,7 @@ app.post("/", (req, res) => {
   res.status(201);
   res.send("Success");
 });
-
+app.use('/*',express.static('client/build'))
 
 server.listen(PORT, () => {
   console.log(`App listening on PORT: ${PORT}`);
