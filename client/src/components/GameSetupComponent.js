@@ -14,7 +14,7 @@ const MainComponent = () => {
   useEffect(() => {
     if (gameStarted && joinType === "new") {
       const postNewGame = async () => {
-        const game = await axios.post("http://localhost:5001/game/new", {
+        const game = await axios.post("www.radpong.com/game/new", {
           playerOne: userName,
           deviceOne: device,
         });
@@ -24,7 +24,7 @@ const MainComponent = () => {
     }
     if (gameStarted && joinType === "join") {
       const joinGame = async () => {
-        const game = await axios.post("http://localhost:5001/game/join", {
+        const game = await axios.post("www.radpong.com/game/join", {
           playerTwo: userName,
           deviceTwo: device,
           gameId,
