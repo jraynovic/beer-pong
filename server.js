@@ -52,6 +52,9 @@ app.set('io', io)
 app.use('/game', CreateGameRouter)
 app.use('/point', PointRouter)
 
+app.get('/test',(req,res)=>{
+  res.send('HELLO FROM RAD PONG!')
+})
 app.post("/", (req, res) => {
   io.sockets.emit('point', parseInt(Object.keys(req.body)[0]))
   res.status(201);
