@@ -1,5 +1,5 @@
 import openSocket from 'socket.io-client';
-const  socket = openSocket('https://radpong.com:5001');
+const  socket = openSocket('https://radpong.com');
 
 function subscribeToGame(cb,deviceId) {
   socket.on('point', point => cb(null, point));
