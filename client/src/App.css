@@ -1,13 +1,15 @@
 
 
 .cup-container{
-  position: relative;
-  height: 10rem;
-  width:7rem;
+  /* position: relative; */
+  margin-top: 1rem;
+  height: 10rem; 
+  width:8rem;
   
 }
 
 .cup-left{
+  margin-top: 1rem;
   height: 10rem;
   width: 5rem;
   border-top: .4rem solid darkgreen;
@@ -19,6 +21,7 @@
 }
 
 .cup-right{
+  margin-top: 1rem;
   height: 10rem;
   width: 5rem;
   border-top: .4rem solid darkgreen;
@@ -30,6 +33,7 @@
 }
 
 .cup-left-removed{
+  margin-top: 1rem;
   height: 10rem;
   width: 5rem;
   border-top: .4rem solid darkred;
@@ -41,6 +45,7 @@
 }
 
 .cup-right-removed{
+  margin-top: 1rem;
   height: 10rem;
   width: 5rem;
   border-top: .4rem solid darkred;
