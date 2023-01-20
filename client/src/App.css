@@ -1,15 +1,4 @@
-.App {
-  text-align: center;
-  display: flex;
-  background-color: #fff;
-  height: 100vh;
-  width: 100vw;
- 
-  justify-content: center;
-}
-.center{
-  justify-content: center;
-}
+
 
 .cup-container{
   position: relative;
@@ -58,25 +47,27 @@
   background-color: red;
   transform: skew(-7deg);
   border-bottom-right-radius:1rem;
-  
   float: right;
 }
 
+
 .home-card{
   text-align: center;
-  justify-content: center;
-  align-content:stretch;
   background-color: #80475E;
   color:#fff;
-  transform: skew(-10deg);
-  width: 50rem;
-  height: 12rem;
-  font-size: 3rem;
+  transform: skew(-15deg);
+  width: 80%;
+  height: 8rem;
   margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .title{
-  margin-top: 5rem;
+  font-size: 4rem;
+  border:1px solid black;
+  height: 100%;
+  padding-top: 2rem;
 }
 
 .join-instructions{
@@ -85,6 +76,37 @@
 }
 
 .input{
-  margin-top: 8rem;
-  margin-bottom: 1rem;
+  /* margin-top: 2rem; */
+  /* margin-right: 2rem; */
+   transform: skew(-15deg);
+}
+
+.button-container{
+  /* transform: skew(-15deg); */
+  text-align: center;
+  /* margin-top: 10rem; */
+}
+.button{
+  /* text-align: center; */
+  /* margin-top: 2rem; */
+  transform: skew(-15deg);
+}
+.button-bottom{
+  transform: skew(-15deg);
+  text-align: center;
+  margin-top: 1rem;
+}
+.input-container{
+  /* transform: skew(-15deg); */
+  /* margin-top: 2rem; */
+}
+
+.card{
+  margin: auto;
+  margin-top: 4rem;
+  justify-content:space-evenly;
+  border:2px solid grey;
+  box-shadow:1px 1px grey;
+  height: 25rem;
+  width: 35rem;
 }

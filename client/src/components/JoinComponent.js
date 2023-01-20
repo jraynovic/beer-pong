@@ -1,35 +1,46 @@
 import React from "react";
 import { Grid, Button } from "@mui/material";
+import { Row, Col, Container } from "reactstrap";
 export const JoinComponent = ({ setJoinType }) => {
   return (
-    <div>
-      <Grid container className="home-card center">
-        <Grid item xs={12}>
-          <h2 className="title">How Are You Joining?</h2>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid item xs={12}>
-            <Button
-              color="secondary"
-              size="large"
-              style={{ margin: 20, marginTop: 100 }}
-              variant="contained"
-              onClick={() => setJoinType("new")}
-            >
-              Create New Game
-            </Button>{" "}
-          </Grid>
-          <Button
-            color="secondary"
-            size="large"
-            style={{ margin: 20, marginTop: 20 }}
-            variant="contained"
-            onClick={() => setJoinType("join")}
-          >
-            Join Game with Code
-          </Button>{" "}
-        </Grid>
-      </Grid>
-    </div>
+    <Container fluid>
+       <Row>
+        <Col xs={12}>
+          <div className="home-card">
+            <h1 className="title">Rad Pong</h1>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Row>
+            <Col xs={12}>
+              <div className="button-container card text-center">
+                <div className="button">
+                  <Button
+                    color="secondary"
+                    size="large"
+                    variant="contained"
+                    onClick={() => setJoinType("new")}
+                  >
+                    New Game
+                  </Button>
+                </div>
+                <div className="button">
+                  <Button
+                    color="secondary"
+                    size="large"
+                    variant="contained"
+                    onClick={() => setJoinType("join")}
+                  >
+                    Join Game
+                  </Button>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Container>
   );
 };
