@@ -35,7 +35,7 @@ const MainComponent = () => {
   }, [gameStarted]);
 
   if (gameStarted) {
-    return <GameBoard gameId={gameId} device={device} userName={userName} />;
+    return <GameBoard gameId={gameId} device={device} userName={userName} joinType={joinType} />;
   }
   return (
     <CreateGameComponent
