@@ -5,7 +5,10 @@ import {Container} from 'reactstrap'
 function App() {
   return (
     <BrowserRouter>
-       <Main/>       
+    <div className='app'>
+       <Main/>
+    </div>
+             
     </BrowserRouter>
     
   );

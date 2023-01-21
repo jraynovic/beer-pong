@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Button, IconButton } from "@mui/material";
-import { ContentCopy, Check} from '@mui/icons-material/';
-import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { ContentCopy, Check } from "@mui/icons-material/";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import { subscribeToGame } from "../api";
-import { Row, Col, Container } from 'reactstrap'
-
+import { Row, Col, Container } from "reactstrap";
 
 const GreenCup = () => {
   return (
-    <div className="cup-container" style={{margin:'auto'}}>
+    <div className="cup-container" style={{ margin: "auto" }}>
       <div className="cup-left" />
       <div className="cup-right" />
     </div>
@@ -24,16 +23,16 @@ const RedCup = () => {
   );
 };
 
-const GameBoard = ({ gameId, device, userName }) => {
+const GameBoard = ({ gameId, device, userName, joinType }) => {
   const [board, setBoard] = useState([]);
   const [gameInPlay, setGameInPlay] = useState(true);
-  const [copy, setCopy] = useState(false)
+  const [copy, setCopy] = useState(false);
 
-  useEffect(()=>{
-    setTimeout(()=>{
-      setCopy(false)
-    },[2000])
-  },[copy])
+  useEffect(() => {
+    setTimeout(() => {
+      setCopy(false);
+    }, [2000]);
+  }, [copy]);
 
   subscribeToGame((err, point) => {
     if (Object.keys(point)[0] === "endgame") setGameInPlay(false);
@@ -42,9 +41,36 @@ const GameBoard = ({ gameId, device, userName }) => {
     }
   }, device);
 
+  let message = "";
+  if (joinType === "new") {
+    message = (
+      <h4>
+        {gameInPlay ? ` ${userName}` : `Game ended show score`}{" "}
+        {`Share this game code with a friend ${gameId} to play`}
+        <span>
+          <CopyToClipboard text={gameId} onCopy={() => setCopy(true)}>
+            <IconButton color="secondary">
+              {copy ? <Check /> : <ContentCopy />}
+            </IconButton>
+          </CopyToClipboard>
+        </span>
+      </h4>
+    );
+  } else {
+    <h4>
+      {gameInPlay ? ` ${userName} good luck!` : `Game ended show score`}{" "}
+      <span>
+        <CopyToClipboard text={gameId} onCopy={() => setCopy(true)}>
+          <IconButton color="secondary">
+            {copy ? <Check /> : <ContentCopy />}
+          </IconButton>
+        </CopyToClipboard>
+      </span>
+    </h4>;
+  }
   return (
-    <Container fluid>
-       <Row>
+    <Container>
+      <Row>
         <Col xs={12}>
           <div className="home-card">
             <h1 className="title">Rad Pong</h1>
@@ -52,41 +78,44 @@ const GameBoard = ({ gameId, device, userName }) => {
         </Col>
       </Row>
       <Row>
-        <Col><h4>
-              {gameInPlay ? ` ${userName}!` : `Game ended show score`}{" "}
-              {`Share this game code with a friend ${gameId} to play`}
-              <span>
-                <CopyToClipboard text={gameId} onCopy={() => setCopy(true)}>
-                  <IconButton color="secondary">
-                    {copy ? <Check /> : <ContentCopy />}
-                  </IconButton>
-                </CopyToClipboard>
-              </span>
-            </h4></Col>
+        <Col>{message}</Col>
       </Row>
       <Row>
         <Col md={6} xs={12}>
-          <Row><Col xs={12}>{board.includes(1) ? <RedCup /> : <GreenCup />}</Col></Row>
           <Row>
-            <Col xs={4}/>
-            <Col xs={2}><div>{board.includes(2) ? <RedCup /> : <GreenCup />}</div></Col>
-            <Col xs={2}>{board.includes(3) ? <RedCup /> : <GreenCup />}</Col>
-            <Col xs={4}/>
+            <Col xs={12}>{board.includes(1) ? <RedCup /> : <GreenCup />}</Col>
           </Row>
           <Row>
-            <Col xs={3}></Col>
-            <Col xs={2}>{board.includes(4) ? <RedCup /> : <GreenCup />}</Col>
-            <Col xs={2}>{board.includes(5) ? <RedCup /> : <GreenCup />}</Col>
-            <Col xs={2}>{board.includes(6) ? <RedCup /> : <GreenCup />}</Col>
-            <Col xs={3}></Col>
+            <Col xs={3} />
+            <Col xs={3}>
+              <div>{board.includes(2) ? <RedCup /> : <GreenCup />}</div>
+            </Col>
+            <Col xs={3}>{board.includes(3) ? <RedCup /> : <GreenCup />}</Col>
+            <Col xs={3} />
+          </Row>
+          <Row>
+            <Col xs={2}></Col>
+            <Col xs={8}>
+              <Row>
+                <Col xs={4}>
+                  {board.includes(4) ? <RedCup /> : <GreenCup />}
+                </Col>
+                <Col xs={4}>
+                  {board.includes(5) ? <RedCup /> : <GreenCup />}
+                </Col>
+                <Col xs={4}>
+                  {board.includes(6) ? <RedCup /> : <GreenCup />}
+                </Col>
+              </Row>
+            </Col>
+            <Col xs={2}></Col>
           </Row>
         </Col>
-        <Col md={6} xs={12}>
-          RIght SIde
+        <Col md={6} xs={12} className="video">
+          VIDEO
         </Col>
       </Row>
     </Container>
-    
   );
 };
 

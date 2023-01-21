@@ -7,7 +7,7 @@ import { Container } from "reactstrap";
 const HomeComponent = () => {
   const history = useHistory();
   return (
-    <Container fluid>
+    <Container>
       <Row>
         <Col xs={12}>
           <div className="home-card">
