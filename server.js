@@ -17,7 +17,7 @@ const io = require("socket.io")(server, {
 	}
 });
 
-app.use(cors());
+app.use(cors({orgin:'*'}))
 
 io.on('connection', (socket) => {
   socket.on('listenForPoint',async (deviceId)=>{
@@ -42,8 +42,7 @@ io.on('connection', (socket) => {
 
 
 
-const PORT = 5001;
-app.use(cors({orgin:'*'}))
+const PORT = process.env.PORT || 5001;
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 sequelize.sync().then(() => console.log("db is ready"));
@@ -52,6 +51,9 @@ app.set('io', io)
 app.use('/game', CreateGameRouter)
 app.use('/point', PointRouter)
 
+app.get('/test',(req,res)=>{
+  res.send('HELLO FROM RAD PONG!')
+})
 app.post("/", (req, res) => {
   io.sockets.emit('point', parseInt(Object.keys(req.body)[0]))
   res.status(201);

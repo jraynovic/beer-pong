@@ -1,20 +1,40 @@
-import { Button, Paper, Grid } from "@mui/material";
+import { Button } from "@mui/material";
 import React from "react";
+import { Row, Col } from "reactstrap";
 import { useHistory } from "react-router-dom";
+import { Container } from "reactstrap";
 
 const HomeComponent = () => {
   const history = useHistory();
   return (
-      <div className='home-card center'>
-         <div className="title" style={{paddingBottom:20}}>
-          <h1 >Rad Pong</h1>
-        </div>
-        <div>
-          <Button variant="contained" color='secondary' size="large" fontSize='inherit' onClick={() => history.push("play")}>
-            Play
-          </Button>
-        </div>
-      </div>
+    <Container>
+      <Row>
+        <Col xs={12}>
+          <div className="home-card">
+            <h1 className="title">Rad Pong</h1>
+          </div>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col xs={12}>
+          <div className="card text-center">
+            <div>
+            <Button
+              className="button"
+              variant="contained"
+              color="secondary"
+              size="large"
+              onClick={() => history.push("play")}
+            >
+              Play
+            </Button> 
+            </div>
+         
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
