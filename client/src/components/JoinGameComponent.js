@@ -22,7 +22,7 @@ const JoinGameComponent = ({
       </Row>
       <Row>
         <div className="card text-center">
-          <div>
+          <div className="input">
             <TextField
               color="secondary"
               value={userName}
@@ -31,7 +31,7 @@ const JoinGameComponent = ({
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
-          <div>
+          <div className="input">
             <TextField
               color="secondary"
               value={device}
@@ -40,7 +40,7 @@ const JoinGameComponent = ({
               onChange={(e) => setDevice(e.target.value)}
             />
           </div>
-          <div>
+          <div className="input">
             <TextField
               color="secondary"
               value={gameId}
@@ -49,7 +49,7 @@ const JoinGameComponent = ({
               onChange={(e) => setGameId(e.target.value)}
             />
           </div>
-          <div>
+          <div className="input">
             <Button
               color="secondary"
               variant="contained"
