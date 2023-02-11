@@ -1,9 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Grid, Button, IconButton } from "@mui/material";
+import React, { useEffect, useState, useContext } from "react";
+import { SocketContext } from "../Context";
+import {
+  Grid,
+  Button,
+  IconButton,
+  Select,
+  MenuItem,
+  FormControl,
+  FormLabel,
+  InputLabel,
+} from "@mui/material";
 import { ContentCopy, Check } from "@mui/icons-material/";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { subscribeToGame } from "../api";
 import { Row, Col, Container } from "reactstrap";
+import VideoComponent from "./VideoComponent";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import NoPhotographyIcon from "@mui/icons-material/NoPhotography";
+// import { ContextProvider } from './Context';
 
 const GreenCup = () => {
   return (
@@ -24,6 +38,21 @@ const RedCup = () => {
 };
 
 const GameBoard = ({ gameId, device, userName, joinType }) => {
+  const {
+    name,
+    callAccepted,
+    myVideo,
+    userVideo,
+    callEnded,
+    stream,
+    call,
+    callUser,
+    setVideo,
+    video,
+    devices,
+    me,
+    userJoined
+  } = useContext(SocketContext);
   const [board, setBoard] = useState([]);
   const [gameInPlay, setGameInPlay] = useState(true);
   const [copy, setCopy] = useState(false);
@@ -34,13 +63,16 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
     }, [2000]);
   }, [copy]);
 
-  subscribeToGame((err, point) => {
-    if (Object.keys(point)[0] === "endgame") setGameInPlay(false);
-    if (parseInt(device) !== point.device && gameId === point.gameId) {
-      setBoard([...board, point.point]);
-    }
-  }, device);
-
+  useEffect(()=>{
+    setTimeout(()=>{
+      subscribeToGame((err, point) => {
+        if (Object.keys(point)[0] === "endgame") setGameInPlay(false);
+        if (parseInt(device) !== point.device && gameId === point.gameId) {
+          setBoard([...board, point.point]);
+        }
+      }, device);
+    },[2000])
+  },[])
   let message = "";
   if (joinType === "new") {
     message = (
@@ -111,8 +143,49 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
             <Col xs={2}></Col>
           </Row>
         </Col>
-        <Col md={6} xs={12} className="video">
-          VIDEO
+        <Col md={6} xs={12}>
+          {JSON.stringify(me)}
+          <Row>
+            {joinType === 'new' ?JSON.stringify(userJoined): ''}
+          </Row>
+          <Row>
+          {joinType === 'new' && userJoined.id ? <Button onClick={()=>callUser(userJoined.id)}>Call</Button>: ''}
+          </Row>
+          <Row>
+          {call.isReceivingCall && !callAccepted && (
+        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+          <h1>{call.name} is calling:</h1>
+          <Button variant="contained" color="primary">
+            Answer
+          </Button>
+        </div>
+      )}
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <VideoComponent />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={4}>
+              <IconButton
+                color="secondary"
+                variant="contained"
+                onClick={() => setVideo(!video)}
+              >
+                {video ? <CameraAltIcon /> : <NoPhotographyIcon />}
+              </IconButton>
+            </Col>
+            <Col xs={6}>
+              <FormControl fullWidth>
+                <InputLabel>Camera</InputLabel>
+                <Select style={{ width: "100%" }} label="camera">
+                  {devices?.filter(device=> device.kind === "videoinput").map(cam=> <MenuItem key={cam.label+'menuItem'}>{cam.label}</MenuItem>)}
+                </Select>
+              </FormControl>
+            </Col>
+            {JSON.stringify(call)}
+          </Row>
         </Col>
       </Row>
     </Container>
