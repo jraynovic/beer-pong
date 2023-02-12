@@ -30,8 +30,8 @@
 }
 
 .cup-left-removed{
-  height: 10rem;
-  width: 5rem;
+  height: 6rem;
+  width: 3rem;
   border-top: .4rem solid darkred;
   background-color: red;
   transform: skew(7deg);
@@ -41,12 +41,13 @@
 }
 
 .cup-right-removed{
-  height: 10rem;
-  width: 5rem;
+  height: 6rem;
+  width: 3rem;
   border-top: .4rem solid darkred;
   background-color: red;
   transform: skew(-7deg);
   border-bottom-right-radius:1rem;
+  
   float: right;
 }
 

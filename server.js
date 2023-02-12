@@ -20,7 +20,13 @@ const io = require("socket.io")(server, {
 app.use(cors({orgin:'*'}))
 
 io.on('connection', (socket) => {
+  console.log('CONNECTION ^^^^', socket.id)
+  socket.emit("me", socket.id);
+
   socket.on('listenForPoint',async (deviceId)=>{
+    console.log('\n\n\nLISTEN FOR POINT\n\n\n')
+    console.log(deviceId, 'DEVICE ID\n\n\n')
+
     const game = await Game.findOne({where:{[Op.or]:{deviceOne:deviceId, deviceTwo:deviceId },gameFinished:false } } )
     if(game?.dataValues?.deviceOne === parseInt(deviceId)){
       await Game.update({playerOneSocketId:socket.id},{where:{deviceOne:deviceId, gameFinished:false}})
@@ -31,6 +37,7 @@ io.on('connection', (socket) => {
   })
   socket.on("disconnect", async () => {
 		console.log('User disconnect')
+    console.log(socket.id,'SOCKET ID \n\n\n')
     await Game.update({gameFinished:true},{where:{[Op.or]:{playerOneSocketId:socket.id, playerTwoSocketId:socket.id}}})
     const game =  await Game.findOne({where:{[Op.or]:{playerOneSocketId:socket.id, playerTwoSocketId:socket.id } } } )
     console.log(game?.dataValues?.gameId)
