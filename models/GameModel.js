@@ -37,6 +37,10 @@ Game.init(
     playerTwoPoints:{
       type: DataTypes.STRING
     },
+    idsSent: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     gameFinished: {
       type: DataTypes.BOOLEAN,
       defaultValue: false

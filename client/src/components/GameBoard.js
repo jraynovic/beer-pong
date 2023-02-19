@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Grid, Button, IconButton } from "@mui/material";
-import { ContentCopy, Check } from "@mui/icons-material/";
+import { ContentCopy, Check, VideoCall } from "@mui/icons-material/";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { subscribeToGame } from "../api";
 import { Row, Col, Container } from "reactstrap";
@@ -26,12 +26,8 @@ const RedCup = () => {
 };
 
 const GameBoard = ({ gameId, device, userName, joinType }) => {
-  const {
-    board,
-    setBoard,
-    me,
-    gameInPlay
-  } = useContext(SocketContext);
+  const { board, setBoard, me, gameInPlay, userTwoAvailable, callUser,otherUserId, calling, incomingCall } =
+    useContext(SocketContext);
 
   // const [gameInPlay, setGameInPlay] = useState(true);
   const [copy, setCopy] = useState(false);
@@ -41,13 +37,6 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
       setCopy(false);
     }, [2000]);
   }, [copy]);
-
-  // subscribeToGame((err, point) => {
-  //   if (Object.keys(point)[0] === "endgame") setGameInPlay(false);
-  //   if (parseInt(device) !== point.device && gameId === point.gameId) {
-  //     setBoard([...board, point.point]);
-  //   }
-  // }, device);
 
   let message = "";
   if (joinType === "new") {
@@ -79,7 +68,7 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
   return (
     <Container>
       <Row>
-        <Col xs={12}> DELETE ME LATER? Me: {me}</Col>
+        <Col xs={12}> DELETE ME LATER? Me: {me} Other User:{otherUserId}</Col>
       </Row>
       <Row>
         <Col xs={12}>
@@ -122,8 +111,22 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
             <Col xs={2}></Col>
           </Row>
         </Col>
-        <Col md={6} xs={12} className="video">
-          VIDEO
+        <Col md={6} xs={12}>
+          <Row>
+            <Col xs={12} className="video">
+              VIDEO
+            </Col>
+          </Row>
+          <Row>
+            {otherUserId ? (
+              <IconButton onClick={callUser} color="secondary" >
+                <VideoCall fontSize="large"/>
+              </IconButton>
+            ) : (
+              ""
+            )}
+            {incomingCall ? 'CALL INCOMING': ''}
+          </Row>
         </Col>
       </Row>
     </Container>

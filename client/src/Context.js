@@ -15,7 +15,15 @@ const ContextProvider = ({ children }) => {
   const [joinType, setJoinType] = useState("");
   const [gameId, setGameId] = useState("");
   const [gameInPlay, setGameInPlay] = useState(true);
+  const [userTwoAvailable,setUserTwoAvailable] = useState(false)
+  const [otherUserId, setOtherUserId] = useState('')
+  const [incomingCall, setIncomingCall] = useState(false)
+  const [calling, setCalling] = useState(false)
 
+
+  useEffect(()=>{
+    setUserTwoAvailable(true)
+  },[otherUserId])
   socket.on("me", (id) => setMe(id));
   socket.on('point', point => {
     if (parseInt(device) !== point.device && gameId === point.gameId) {
@@ -30,6 +38,28 @@ const ContextProvider = ({ children }) => {
     socket.emit('listenForPoint',device); 
   }
 
+  socket.on('userAvailable',()=>{
+    if(!otherUserId)socket.emit('requestUsers', gameId)
+  })
+
+  socket.on('users',(game)=>{
+    if(!game) return
+    if(joinType ==='new'){
+        setOtherUserId(game.playerTwoSocketId) 
+    }else{
+        setOtherUserId(game.playerOneSocketId)
+    }
+  })
+
+  const callUser = ()=>{
+    socket.emit('callUser', {otherUserId, gameId})
+    setCalling(true)
+    console.log(`Attempting to call `)
+  }
+
+  socket.on('incomingCall',()=>{
+    setIncomingCall(true)
+  })
 
   return (
     <SocketContext.Provider value={{
@@ -43,7 +73,12 @@ const ContextProvider = ({ children }) => {
       joinType,
       setJoinType,
       gameInPlay,
-      setSocketId
+      setSocketId,
+      userTwoAvailable,
+      callUser,
+      otherUserId,
+      calling,
+      incomingCall
     }}
     >
       {children}
