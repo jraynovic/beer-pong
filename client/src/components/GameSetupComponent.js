@@ -1,34 +1,52 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import GameBoard from "./GameBoard";
 import CreateGameComponent from "./CreateGameComponent";
 import { subscribeToPoints } from "../api";
 
+import {SocketContext} from '../Context'
+
 const MainComponent = () => {
+  const {
+    board,
+    setBoard,
+    me,
+    device,
+    setDevice,
+    gameId,
+    setGameId,
+    joinType,
+    setJoinType,
+    player,
+    setPlayer,
+    setSocketId
+  } = useContext(SocketContext);
+
+
   const [gameStarted, setGameStarted] = useState(false);
   const [userName, setUserName] = useState("");
-  const [device, setDevice] = useState("");
-  const [player, setPlayer] = useState("");
-  const [joinType, setJoinType] = useState("");
-  const [gameId, setGameId] = useState("");
+
   useEffect(() => {
     if (gameStarted && joinType === "new") {
+    
       const postNewGame = async () => {
-        const game = await axios.post("https://radpong.com/game/new", {
+        const game = await axios.post("http://localhost:5001/game/new", {
           playerOne: userName,
           deviceOne: device,
         });
         setGameId(game.data.gameId);
+        setSocketId()
       };
       postNewGame();
     }
     if (gameStarted && joinType === "join") {
       const joinGame = async () => {
-        const game = await axios.post("https://radpong.com/game/join", {
+        const game = await axios.post("http://localhost:5001/game/join", {
           playerTwo: userName,
           deviceTwo: device,
           gameId,
         });
+        if(game)setSocketId();
       };
       joinGame();
     }
