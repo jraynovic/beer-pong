@@ -32,10 +32,20 @@ io.on('connection', (socket) => {
     if(game)socket.emit('users', game)
   })
 
-  socket.on('callUser', async({otherUserId, gameId})=>{
-    const game = await Game.findOne({where:{[Op.or]:{playerOneSocketId:otherUserId, playerTwoSocketId:otherUserId },gameFinished:false,gameId } } )
-    socket.to(otherUserId).emit('incomingCall')
-  })
+  // socket.on('callUser', async({otherUserId, gameId})=>{
+  //   const game = await Game.findOne({where:{[Op.or]:{playerOneSocketId:otherUserId, playerTwoSocketId:otherUserId },gameFinished:false,gameId } } )
+  //   socket.to(otherUserId).emit('incomingCall')
+  // })
+
+  socket.on("callUser", ({ userToCall, signalData, from, name }) => {
+		io.to(userToCall).emit("callUser", { signal: signalData, from, name });
+	});
+
+  socket.on("answerCall", (data) => {
+    console.log('\n\n\nCALL ACCETPED*********************\n\n\n')
+    console.log(data.to)
+    io.sockets.emit("callAccepted", data.signal)
+	});
 
   socket.on('listenForPoint',async (deviceId)=>{
     console.log('LISTEN FOR POINT\n\n\n\n\n\n')
