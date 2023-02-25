@@ -7,6 +7,8 @@ import { Row, Col, Container } from "reactstrap";
 
 import { SocketContext } from "../Context";
 
+import VideoComponent from './VideoComponent'
+
 const GreenCup = () => {
   return (
     <div className="cup-container" style={{ margin: "auto" }}>
@@ -26,7 +28,7 @@ const RedCup = () => {
 };
 
 const GameBoard = ({ gameId, device, userName, joinType }) => {
-  const { board, setBoard, me, gameInPlay, userTwoAvailable, callUser,otherUserId, calling, incomingCall } =
+  const { board, setBoard, me, gameInPlay, userTwoAvailable, callUser,otherUserId, calling, incomingCall, call, answerCall, setGameBoardLoaded } =
     useContext(SocketContext);
 
   // const [gameInPlay, setGameInPlay] = useState(true);
@@ -37,6 +39,10 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
       setCopy(false);
     }, [2000]);
   }, [copy]);
+
+  useEffect(()=>{
+    setGameBoardLoaded(true)
+  },[])
 
   let message = "";
   if (joinType === "new") {
@@ -114,7 +120,7 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
         <Col md={6} xs={12}>
           <Row>
             <Col xs={12} className="video">
-              VIDEO
+              <VideoComponent/>
             </Col>
           </Row>
           <Row>
@@ -125,7 +131,7 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
             ) : (
               ""
             )}
-            {incomingCall ? 'CALL INCOMING': ''}
+            {call.isReceivingCall ?<Button onClick={answerCall}>CALL INCOMING</Button>: ''}
           </Row>
         </Col>
       </Row>
