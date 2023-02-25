@@ -4,7 +4,7 @@ import Peer from 'simple-peer';
 
 const SocketContext = createContext();
 
-const socket = io('https://radpong.com/',{query:{gameId:'TEST FROM CLIENT!'}}); 
+const socket = io('https://radpong.com',{query:{gameId:'TEST FROM CLIENT!'}}); 
 
 const ContextProvider = ({ children }) => {
   const [me, setMe] = useState('');
