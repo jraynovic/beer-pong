@@ -7,7 +7,7 @@ import { Row, Col, Container } from "reactstrap";
 
 import { SocketContext } from "../Context";
 
-import VideoComponent from './VideoComponent'
+import VideoComponent from "./VideoComponent";
 
 const GreenCup = () => {
   return (
@@ -28,8 +28,21 @@ const RedCup = () => {
 };
 
 const GameBoard = ({ gameId, device, userName, joinType }) => {
-  const { board, setBoard, me, gameInPlay, userTwoAvailable, callUser,otherUserId, calling, incomingCall, call, answerCall, setGameBoardLoaded } =
-    useContext(SocketContext);
+  const {
+    board,
+    setBoard,
+    me,
+    gameInPlay,
+    userTwoAvailable,
+    callUser,
+    otherUserId,
+    calling,
+    incomingCall,
+    call,
+    answerCall,
+    setGameBoardLoaded,
+    callAccepted,
+  } = useContext(SocketContext);
 
   // const [gameInPlay, setGameInPlay] = useState(true);
   const [copy, setCopy] = useState(false);
@@ -40,9 +53,9 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
     }, [2000]);
   }, [copy]);
 
-  useEffect(()=>{
-    setGameBoardLoaded(true)
-  },[])
+  useEffect(() => {
+    setGameBoardLoaded(true);
+  }, []);
 
   let message = "";
   if (joinType === "new") {
@@ -73,9 +86,6 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
   }
   return (
     <Container>
-      <Row>
-        <Col xs={12}> DELETE ME LATER? Me: {me} Other User:{otherUserId}</Col>
-      </Row>
       <Row>
         <Col xs={12}>
           <div className="home-card">
@@ -117,21 +127,38 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
             <Col xs={2}></Col>
           </Row>
         </Col>
-        <Col md={6} xs={12}>
+        <Col md={6} xs={12} className="videoContainer">
           <Row>
-            <Col xs={12} className="video">
-              <VideoComponent/>
+            <Col xs={12}>
+              <VideoComponent />
             </Col>
           </Row>
           <Row>
-            {otherUserId ? (
-              <IconButton onClick={callUser} color="secondary" >
-                <VideoCall fontSize="large"/>
-              </IconButton>
-            ) : (
-              ""
-            )}
-            {call.isReceivingCall ?<Button onClick={answerCall}>CALL INCOMING</Button>: ''}
+            <Col>
+              {otherUserId && !callAccepted? (
+                <IconButton onClick={callUser} color="secondary">
+                  <VideoCall fontSize="large" />
+                </IconButton>
+              ) : (
+                ""
+              )}
+            </Col>
+            <Col>
+              {call.isReceivingCall && !callAccepted ? (
+                <div className="button">
+                  <Button
+                    color="secondary"
+                    size="large"
+                    variant="contained"
+                    onClick={answerCall}
+                  >
+                    Answer
+                  </Button>
+                </div>
+              ) : (
+                ""
+              )}
+            </Col>
           </Row>
         </Col>
       </Row>

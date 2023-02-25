@@ -100,43 +100,27 @@ const ContextProvider = ({ children }) => {
   })
 
   const callUser = ()=>{
-    // socket.emit('callUser', {otherUserId, gameId})
     setCalling(true)
 
     setTimeout(()=>{
       const peer = new Peer({ initiator: true, trickle: false, stream });
 
       peer.on('signal', (data) => {
-        console.log('PEER ON SIGNAL') // good
         socket.emit('callUser', { userToCall: otherUserId, signalData: data, from: me, player });
       });
   
       peer.on('stream', (currentStream) => {
-        console.log('Stream active:', currentStream.active);
         userVideo.current.srcObject = currentStream;
       });
   
       socket.on('callAccepted', (signal) => {
         if(joinType ==='new'){
-          console.log(signal, 'CALL ACCEPTED SIGNAL') // good
           setCallAccepted(true);
           peer.signal(signal);
         }
       });
 
-      peer.on('connect',()=>{
-        console.log('CONNECTED USER 1')
-      })
-
-      peer.on('error', err => {
-        console.log('Peer  error:', err);
-      });
-      
-  
       connectionRef.current = peer;
-  
-      
-      console.log(`Attempting to call `)
     },1000)
     
   }
@@ -152,19 +136,9 @@ const peer = new Peer({ initiator: false, trickle: false, stream });
     });
 
     peer.on('stream', (currentStream) => {
-      console.log('Stream active:', currentStream.active);
       userVideo.current.srcObject = currentStream;
     });
-    console.log(call.signal, 'call.signal')
     peer.signal(call.signal);
-
-    peer.on('connect',()=>{
-      console.log('CONNECTED USER 2')
-    })
-
-    peer.on('error', err => {
-      console.log('Peer  error:', err);
-    });
 
     connectionRef.current = peer;
     },1000)
@@ -198,7 +172,8 @@ const peer = new Peer({ initiator: false, trickle: false, stream });
       callEnded,
       userVideo,
       gameBoardLoaded,
-      setGameBoardLoaded
+      setGameBoardLoaded,
+      callAccepted
     }}
     >
       {children}

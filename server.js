@@ -32,23 +32,16 @@ io.on('connection', (socket) => {
     if(game)socket.emit('users', game)
   })
 
-  // socket.on('callUser', async({otherUserId, gameId})=>{
-  //   const game = await Game.findOne({where:{[Op.or]:{playerOneSocketId:otherUserId, playerTwoSocketId:otherUserId },gameFinished:false,gameId } } )
-  //   socket.to(otherUserId).emit('incomingCall')
-  // })
-
   socket.on("callUser", ({ userToCall, signalData, from, name }) => {
 		io.to(userToCall).emit("callUser", { signal: signalData, from, name });
 	});
 
   socket.on("answerCall", (data) => {
-    console.log('\n\n\nCALL ACCETPED*********************\n\n\n')
-    console.log(data.to)
     io.sockets.emit("callAccepted", data.signal)
 	});
 
   socket.on('listenForPoint',async (deviceId)=>{
-    console.log('LISTEN FOR POINT\n\n\n\n\n\n')
+ 
     const game = await Game.findOne({where:{[Op.or]:{deviceOne:deviceId, deviceTwo:deviceId },gameFinished:false } } )
     if(game?.dataValues?.deviceOne === parseInt(deviceId)){
       await Game.update({playerOneSocketId:socket.id},{where:{deviceOne:deviceId, gameFinished:false}})
@@ -61,7 +54,7 @@ io.on('connection', (socket) => {
 		console.log('User disconnect')
     await Game.update({gameFinished:true},{where:{[Op.or]:{playerOneSocketId:socket.id, playerTwoSocketId:socket.id}}})
     const game =  await Game.findOne({where:{[Op.or]:{playerOneSocketId:socket.id, playerTwoSocketId:socket.id } } } )
-    console.log(game?.dataValues?.gameId)
+
     if(game?.dataValues?.playerOneSocketId || game?.dataValues?.playerTwoSocketId){
       io.sockets.emit('endgame', {gameId:game?.dataValues?.gameId})
     }

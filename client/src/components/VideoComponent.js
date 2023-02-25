@@ -39,38 +39,26 @@ const VideoPlayer = () => {
   const classes = useStyles();
 
   return (
-    <Grid container className={classes.gridContainer}>
-        Are we working?
-        <Row>
-          <Col>
-            {" "}
-            <video
-              playsInline
-              muted
-              ref={myVideo}
-              autoPlay
-              className={classes.video}
-            />
-          </Col>
-        </Row>
-      {/* {callAccepted && !callEnded && ( */}
-        <Paper className={classes.paper} onClick={()=>{console.log(userVideo)}}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h5" gutterBottom>
-              {call.name || "Name"}
-            </Typography>
-            WE SHOULD BE SHOWING?
-            <video
-            //  style={{border:'3px solid red'}}
-              playsInline
-              ref={userVideo}
-              autoPlay
-              className={classes.video}
-            />
-          </Grid>
-        </Paper>
-      {/* )} */}
-    </Grid>
+    <Row>
+      {callAccepted ? (
+        <video
+          playsInline
+          muted
+          ref={userVideo}
+          autoPlay
+          className="otherVideo"
+        />
+      ) : (
+        <div />
+      )}
+
+      <video
+        playsInline
+        ref={myVideo}
+        autoPlay
+        className={callAccepted ? "video" : "otherVideo"}
+      />
+    </Row>
   );
 };
 
