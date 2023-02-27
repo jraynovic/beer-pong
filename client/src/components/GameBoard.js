@@ -135,7 +135,7 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
           </Row>
           <Row>
             <Col>
-              {otherUserId && !callAccepted? (
+              {otherUserId && !callAccepted && !call.isReceivingCall ? (
                 <IconButton onClick={callUser} color="secondary">
                   <VideoCall fontSize="large" />
                 </IconButton>

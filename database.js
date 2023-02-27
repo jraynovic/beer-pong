@@ -1,8 +1,8 @@
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize("beer-pong", "user", "password", {
+const sequelize = new Sequelize("codeConnecter", "user", "password", {
   dialect: "sqlite",
-  host: "./beerpong.sqlite",
+  host: "./codeConnecterDb.sqlite",
 });
 
 module.exports = sequelize;
