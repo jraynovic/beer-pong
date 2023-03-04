@@ -27,7 +27,7 @@ const RedCup = () => {
   );
 };
 
-const GameBoard = ({ gameId, device, userName, joinType }) => {
+const GameBoard = ({ gameId, joinType }) => {
   const {
     board,
     setBoard,
@@ -42,6 +42,7 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
     answerCall,
     setGameBoardLoaded,
     callAccepted,
+    userName
   } = useContext(SocketContext);
 
   // const [gameInPlay, setGameInPlay] = useState(true);
@@ -145,7 +146,7 @@ const GameBoard = ({ gameId, device, userName, joinType }) => {
             </Col>
             <Col>
               {call.isReceivingCall && !callAccepted ? (
-                <div className="button">
+                <div className="button answer-button" >
                   <Button
                     color="secondary"
                     size="large"

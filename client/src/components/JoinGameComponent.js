@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { TextField, Button } from "@mui/material";
 import { Row, Col, Container } from "reactstrap";
+import { SocketContext } from "../Context";
 
 const JoinGameComponent = ({
-  userName,
-  setUserName,
   device,
   setDevice,
   gameId,
   setGameId,
   setGameStarted,
 }) => {
+  const {
+    userName,
+    setUserName,
+    startGame,
+    error
+  } = useContext(SocketContext);
+
   return (
     <Container fluid>
       <Row>
@@ -53,11 +59,12 @@ const JoinGameComponent = ({
             <Button
               color="secondary"
               variant="contained"
-              onClick={() => setGameStarted(true)}
+              onClick={startGame}
             >
               Join
             </Button>
           </div>
+          <div className="error">{error}</div>
         </div>
       </Row>
     </Container>

@@ -1,13 +1,18 @@
-import React from "react";
+import React,{useContext} from "react";
 import { TextField, Button, Grid } from "@mui/material";
 import { Col, Row, Container } from "reactstrap";
+import { SocketContext } from "../Context";
+
 const NewGame = ({
   device,
   setDevice,
-  userName,
-  setUserName,
   setGameStarted,
 }) => {
+  const {
+    userName,
+    setUserName,
+    startGame
+  } = useContext(SocketContext);
   return (
     <Container fluid>
       <Row>
@@ -42,7 +47,7 @@ const NewGame = ({
               <Button
                 color="secondary"
                 variant="contained"
-                onClick={() => setGameStarted(true)}
+                onClick={()=>startGame()}
               >
                 Create
               </Button>

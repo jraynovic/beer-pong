@@ -41,7 +41,6 @@ io.on('connection', (socket) => {
 	});
 
   socket.on('listenForPoint',async (deviceId)=>{
- 
     const game = await Game.findOne({where:{[Op.or]:{deviceOne:deviceId, deviceTwo:deviceId },gameFinished:false } } )
     if(game?.dataValues?.deviceOne === parseInt(deviceId)){
       await Game.update({playerOneSocketId:socket.id},{where:{deviceOne:deviceId, gameFinished:false}})
@@ -51,7 +50,6 @@ io.on('connection', (socket) => {
     }
   })
   socket.on("disconnect", async () => {
-		console.log('User disconnect')
     await Game.update({gameFinished:true},{where:{[Op.or]:{playerOneSocketId:socket.id, playerTwoSocketId:socket.id}}})
     const game =  await Game.findOne({where:{[Op.or]:{playerOneSocketId:socket.id, playerTwoSocketId:socket.id } } } )
 
