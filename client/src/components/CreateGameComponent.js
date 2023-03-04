@@ -5,15 +5,12 @@ import NewGame from "./NewGameComponent";
 import JoinGameComponent from "./JoinGameComponent";
 
 const CreateGameComponent = ({
-  setUserName,
-  userName,
   game,
   device,
   setDevice,
   setPlayer,
   joinType,
   setJoinType,
-  setGameStarted,
   gameId,
   setGameId,
 }) => {
@@ -25,12 +22,12 @@ const CreateGameComponent = ({
 
   if (joinType === "new") {
     return (
-      <NewGame device={device} setDevice={setDevice} userName={userName} setUserName={setUserName} setGameStarted={setGameStarted} />
+      <NewGame device={device} setDevice={setDevice}  />
     );
   }
 
   return (
-    <JoinGameComponent userName={userName} setUserName={setUserName} device={device} setDevice={setDevice} gameId={gameId} setGameId={setGameId} setGameStarted={setGameStarted}/>
+    <JoinGameComponent device={device} setDevice={setDevice} gameId={gameId} setGameId={setGameId}/>
   );
 };
 export default CreateGameComponent;

@@ -19,47 +19,42 @@ const MainComponent = () => {
     setJoinType,
     player,
     setPlayer,
-    setSocketId
+    setSocketId,
+    gameStarted
+   
   } = useContext(SocketContext);
 
-
-  const [gameStarted, setGameStarted] = useState(false);
-  const [userName, setUserName] = useState("");
-
-  useEffect(() => {
-    if (gameStarted && joinType === "new") {
+  // useEffect(() => {
+  //   if (gameStarted && joinType === "new") {
     
-      const postNewGame = async () => {
-        const game = await axios.post("https://radpong.com/game/new", {
-          playerOne: userName,
-          deviceOne: device,
-        });
-        setGameId(game.data.gameId);
-        setSocketId()
-      };
-      postNewGame();
-    }
-    if (gameStarted && joinType === "join") {
-      const joinGame = async () => {
-        const game = await axios.post("https://radpong.com/game/join", {
-          playerTwo: userName,
-          deviceTwo: device,
-          gameId,
-        });
-        if(game)setSocketId();
-      };
-      joinGame();
-    }
-  }, [gameStarted]);
+  //     const postNewGame = async () => {
+  //       const game = await axios.post("https://radpong.com/game/new", {
+  //         playerOne: userName,
+  //         deviceOne: device,
+  //       });
+  //       setGameId(game.data.gameId);
+  //       setSocketId()
+  //     };
+  //     postNewGame();
+  //   }
+  //   if (gameStarted && joinType === "join") {
+  //     const joinGame = async () => {
+  //       const game = await axios.post("https://radpong.com/game/join", {
+  //         playerTwo: userName,
+  //         deviceTwo: device,
+  //         gameId,
+  //       });
+  //       if(game)setSocketId();
+  //     };
+  //     joinGame();
+  //   }
+  // }, [gameStarted]);
 
   if (gameStarted) {
-    return <GameBoard gameId={gameId} device={device} userName={userName} joinType={joinType} />;
+    return <GameBoard gameId={gameId} device={device}  joinType={joinType} />;
   }
   return (
     <CreateGameComponent
-      setGameStarted={setGameStarted}
-      userName={userName}
-      setUserName={setUserName}
       device={device}
       setDevice={setDevice}
       setPlayer={setPlayer}

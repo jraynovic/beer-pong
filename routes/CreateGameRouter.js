@@ -22,6 +22,11 @@ GameRouter.route('/join')
 .post(async (req,res)=>{
   const io = req.app.get('io');
   const { playerTwo, gameId, deviceTwo } = req.body;
+  const gameExists = await Game.findOne({where:{gameId,gameFinished:false}})
+  console.log(gameExists, "GAME EXISTS***************\n\n\n")
+  if(gameExists === null){
+    return res.send({status:'error',message:`${gameId} does not exist check your game code`})
+  }
   const updatedGame = await Game.update({playerTwo, deviceTwo},{where:{gameId,gameFinished:false}})
   const currentGame = await Game.findOne({where:{deviceTwo, gameId,gameFinished:false}})
   console.log(currentGame, '\n\n\n\nupdatedGame^^^')
