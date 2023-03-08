@@ -32,6 +32,7 @@ const ContextProvider = ({ children }) => {
   const [stream, setStream] = useState();
   const [video, setVideo] = useState(false);
   const [devices, setDevices] = useState([]);
+  const [playerTwoName, setPlayerTwoName] = useState('');
 
   const myVideo = useRef();
   const userVideo = useRef();
@@ -74,6 +75,10 @@ const ContextProvider = ({ children }) => {
     });
   }, []);
 
+  socket.on('endGame',()=>{ 
+    setGameInPlay(false)
+    
+  })
   socket.on("me", (id) => setMe(id));
   socket.on("point", (point) => {
     if (parseInt(device) !== point.device && gameId === point.gameId) {
@@ -108,7 +113,6 @@ const ContextProvider = ({ children }) => {
         deviceTwo: device,
         gameId,
       });
-
       if (game.data.status !== "error") {
         setSocketId();
         setGameStarted(true);
@@ -131,8 +135,12 @@ const ContextProvider = ({ children }) => {
     if (!game) return;
     if (joinType === "new") {
       setOtherUserId(game.playerTwoSocketId);
+      setPlayerTwoName(game.playerTwo)
+      console.log(game)
     } else {
       setOtherUserId(game.playerOneSocketId);
+      setPlayerTwoName(game.playerOne)
+      console.log(game)
     }
   });
 
@@ -219,6 +227,7 @@ const ContextProvider = ({ children }) => {
         startGame,
         gameStarted,
         error,
+        playerTwoName
       }}
     >
       {children}

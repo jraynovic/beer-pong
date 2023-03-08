@@ -29,18 +29,13 @@ const VideoPlayer = () => {
     callAccepted,
     myVideo,
     userVideo,
-    callEnded,
-    stream,
-    call,
-    setVideo,
-    video,
-    devices,
+    gameInPlay
   } = useContext(SocketContext);
   const classes = useStyles();
 
   return (
     <Row>
-      {callAccepted ? (
+      {callAccepted && gameInPlay ? (
         <video
           playsInline
           muted
@@ -56,7 +51,7 @@ const VideoPlayer = () => {
         playsInline
         ref={myVideo}
         autoPlay
-        className={callAccepted ? "video" : "otherVideo"}
+        className={callAccepted  && gameInPlay? "video" : "otherVideo"}
       />
     </Row>
   );

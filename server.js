@@ -54,7 +54,8 @@ io.on('connection', (socket) => {
     const game =  await Game.findOne({where:{[Op.or]:{playerOneSocketId:socket.id, playerTwoSocketId:socket.id } } } )
 
     if(game?.dataValues?.playerOneSocketId || game?.dataValues?.playerTwoSocketId){
-      io.sockets.emit('endgame', {gameId:game?.dataValues?.gameId})
+      io.to(game?.dataValues?.playerOneSocketId).emit('endGame')
+      io.to(game?.dataValues?.playerTwoSocketId).emit('endGame')
     }
 	});
 });
