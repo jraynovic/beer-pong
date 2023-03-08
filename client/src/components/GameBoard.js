@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Grid, Button, IconButton } from "@mui/material";
-import { ContentCopy, Check, VideoCall } from "@mui/icons-material/";
+import { ContentCopy, Check, VideoCall, Link, LinkOff } from "@mui/icons-material/";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { subscribeToGame } from "../api";
 import { Row, Col, Container } from "reactstrap";
@@ -42,7 +42,8 @@ const GameBoard = ({ gameId, joinType }) => {
     answerCall,
     setGameBoardLoaded,
     callAccepted,
-    userName
+    userName,
+    playerTwoName
   } = useContext(SocketContext);
 
   // const [gameInPlay, setGameInPlay] = useState(true);
@@ -130,12 +131,15 @@ const GameBoard = ({ gameId, joinType }) => {
         </Col>
         <Col md={6} xs={12} className="videoContainer">
           <Row>
+            <Col>{gameInPlay? `Playing against: ${playerTwoName}`: 'Game Ended'}</Col>
+          </Row>
+          <Row>
             <Col xs={12}>
               <VideoComponent />
             </Col>
           </Row>
           <Row>
-            <Col>
+            <Col sm={4}>
               {otherUserId && !callAccepted && !call.isReceivingCall ? (
                 <IconButton onClick={callUser} color="secondary">
                   <VideoCall fontSize="large" />
@@ -144,7 +148,7 @@ const GameBoard = ({ gameId, joinType }) => {
                 ""
               )}
             </Col>
-            <Col>
+            <Col sm={4} className='text-center'>
               {call.isReceivingCall && !callAccepted ? (
                 <div className="button answer-button" >
                   <Button
@@ -160,6 +164,16 @@ const GameBoard = ({ gameId, joinType }) => {
                 ""
               )}
             </Col>
+            <Col sm={4} className='text-center mt-3'>
+              <div>
+                {(otherUserId && gameInPlay)? 
+                <Link/>
+              :
+              <LinkOff/>
+              }
+              </div>
+              
+            </Col> 
           </Row>
         </Col>
       </Row>

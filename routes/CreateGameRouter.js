@@ -30,7 +30,7 @@ GameRouter.route('/join')
   const game = {gameCap, currentGame}
   io.sockets.emit("userAvailable",game);
   res.status(201)  
-  res.send({...updatedGame })
+  res.send({...gameExists })
 })
 
 
