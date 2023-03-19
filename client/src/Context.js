@@ -117,7 +117,7 @@ const ContextProvider = ({ children }) => {
       }
     }
     if (joinType === "join") {
-      // const game = await axios.post("https://radpong.com/game/join", { http://localhost:3000/play
+      // const game = await axios.post("https://radpong.com/game/join", {
       const game = await axios.post("http://localhost:5001/game/join", {
         playerTwo: userName,
         deviceTwo: device,
