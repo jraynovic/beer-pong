@@ -16,12 +16,15 @@ PointRouter.route("/").post(async (req, res) => {
       },
     });
     if (device === game.dataValues.deviceOne) {
-      if (game.dataValues.playerOnePoints < 100) {
+      if (game.dataValues.playerOnePoints < 6) {
         const playerOnePoints = +game.dataValues.playerOnePoints + 1;
         io.sockets.emit("point", {
           point: parseInt(point),
           device,
           gameId: game.dataValues.gameId,
+          game,
+          playerOnePoints: +game.playerOnePoints+1,
+          playerTwoPoints: +game.playerTwoPoints,
         });
         await Game.update(
           { playerOnePoints },
@@ -30,12 +33,14 @@ PointRouter.route("/").post(async (req, res) => {
       }
       console.log("PLAYER ONE SCORED!");
     } else if (device === game.dataValues.deviceTwo) {
-      if (game.dataValues.playerOnePoints < 100) {
-        const playerTwoPoints = +game.dataValues.playerOnePoints + 1;
+      if (game.dataValues.playerTwoPoints < 6) {
+        const playerTwoPoints = +game.dataValues.playerTwoPoints + 1;
         io.sockets.emit("point", {
           point: parseInt(point),
           device,
           gameId: game.dataValues.gameId,
+          playerOnePoints: +game.playerOnePoints,
+          playerTwoPoints: +game.playerTwoPoints+1,
         });
         await Game.update(
           { playerTwoPoints },

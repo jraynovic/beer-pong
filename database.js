@@ -1,8 +1,8 @@
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize("codeConnecter", "user", "password", {
+const sequelize = new Sequelize("RadPong", "user", "password", {
   dialect: "sqlite",
-  host: "./codeConnecterDb.sqlite",
+  host: "./RadPongDb.sqlite",
 });
 
 module.exports = sequelize;
