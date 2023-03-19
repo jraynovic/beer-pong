@@ -1,6 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Grid, Button, IconButton } from "@mui/material";
-import { ContentCopy, Check, VideoCall, Link, LinkOff } from "@mui/icons-material/";
+import {
+  ContentCopy,
+  Check,
+  VideoCall,
+  Link,
+  LinkOff,
+} from "@mui/icons-material/";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { subscribeToGame } from "../api";
 import { Row, Col, Container } from "reactstrap";
@@ -43,7 +49,9 @@ const GameBoard = ({ gameId, joinType }) => {
     setGameBoardLoaded,
     callAccepted,
     userName,
-    playerTwoName
+    playerTwoName,
+    myPoints,
+    otherPlayerPoints,
   } = useContext(SocketContext);
 
   // const [gameInPlay, setGameInPlay] = useState(true);
@@ -128,10 +136,29 @@ const GameBoard = ({ gameId, joinType }) => {
             </Col>
             <Col xs={2}></Col>
           </Row>
+          <Row>
+            <Col>
+              <div className="score-title">
+                <b>
+                  <div>
+                  <span>My Score: </span>
+                  {myPoints}
+                  </div>
+                  <div>
+                    <span> {playerTwoName}: </span>
+                  {otherPlayerPoints}
+                  </div>
+                  
+                </b>
+              </div>
+            </Col>
+          </Row>
         </Col>
         <Col md={6} xs={12} className="videoContainer">
           <Row>
-            <Col>{gameInPlay? `Playing against: ${playerTwoName}`: 'Game Ended'}</Col>
+            <Col>
+              {gameInPlay ? `Playing against: ${playerTwoName}` : "Game Ended"}
+            </Col>
           </Row>
           <Row>
             <Col xs={12}>
@@ -148,9 +175,9 @@ const GameBoard = ({ gameId, joinType }) => {
                 ""
               )}
             </Col>
-            <Col sm={4} className='text-center'>
+            <Col sm={4} className="text-center">
               {call.isReceivingCall && !callAccepted ? (
-                <div className="button answer-button" >
+                <div className="button answer-button">
                   <Button
                     color="secondary"
                     size="large"
@@ -164,16 +191,9 @@ const GameBoard = ({ gameId, joinType }) => {
                 ""
               )}
             </Col>
-            <Col sm={4} className='text-center mt-3'>
-              <div>
-                {(otherUserId && gameInPlay)? 
-                <Link/>
-              :
-              <LinkOff/>
-              }
-              </div>
-              
-            </Col> 
+            <Col sm={4} className="text-center mt-3">
+              <div>{otherUserId && gameInPlay ? <Link /> : <LinkOff />}</div>
+            </Col>
           </Row>
         </Col>
       </Row>

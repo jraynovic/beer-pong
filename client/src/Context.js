@@ -33,6 +33,8 @@ const ContextProvider = ({ children }) => {
   const [video, setVideo] = useState(false);
   const [devices, setDevices] = useState([]);
   const [playerTwoName, setPlayerTwoName] = useState('');
+  const [myPoints, setMyPoints] = useState(0);
+  const [otherPlayerPoints, setOtherPlayerPoints] = useState(0);
 
   const myVideo = useRef();
   const userVideo = useRef();
@@ -82,7 +84,15 @@ const ContextProvider = ({ children }) => {
   socket.on("me", (id) => setMe(id));
   socket.on("point", (point) => {
     if (parseInt(device) !== point.device && gameId === point.gameId) {
+      console.log(point, 'Other PLayer Scored')
+      setOtherPlayerPoints(joinType ==='new'? point.playerTwoPoints: point.playerOnePoints)
       setBoard([...board, point.point]);
+    }
+    else if(gameId === point.gameId){
+      console.log(point,'I scored')
+      setMyPoints(joinType ==='new'? point.playerOnePoints: point.playerTwoPoints)
+      // setOtherPlayerPoints(joinType ==='new'? point.playerTwoPoints: point.playerOnePoints)
+      
     }
   });
   socket.on("endgame", (gameId) => {
@@ -227,7 +237,9 @@ const ContextProvider = ({ children }) => {
         startGame,
         gameStarted,
         error,
-        playerTwoName
+        playerTwoName,
+        myPoints,
+        otherPlayerPoints
       }}
     >
       {children}
